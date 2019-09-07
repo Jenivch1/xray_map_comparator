@@ -12,6 +12,7 @@ namespace MapComparer.Model
 {
 
 
+
     static class Hash
     {
         // Perceptive hash: habr.com/post/120562. 5 is good similarity for this algorithm.
