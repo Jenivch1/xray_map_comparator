@@ -1,0 +1,12 @@
+menu: faq, about
+use dct hash
+auto detect match by distance
+-add "Remove texture" button for old textures
+-allow user select match from all textures
+check that only subfolders are ignored, not subsubfolders
+auto mode or cmd params. [ comparer.exe --path1 --path2 --distance --output_file ]
+hash converter
+tex gallery
+logger
+
+
