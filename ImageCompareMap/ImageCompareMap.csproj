@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\PageManager.cs" />
     <Compile Include="Model\Texture.cs" />
     <Compile Include="Interface\ViewModel\Command.cs" />
     <Compile Include="Interface\ViewModel\MainWindowViewModel.cs" />
