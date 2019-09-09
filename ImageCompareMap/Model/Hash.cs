@@ -10,14 +10,12 @@ using System.Threading.Tasks;
 
 namespace MapComparer.Model
 {
-
-
-
+    /// Perceptive hash: https://habr.com/ru/post/120562/. 5\64 is good similarity for this algorithm.
     static class Hash
     {
-        // Perceptive hash: habr.com/post/120562. 5 is good similarity for this algorithm.
-        public static byte  Distance = 5;
+        public static byte  Threshold   = 5;
 
+        // TODO: SetPixel is slow - Rewrite with unsafe.
         public static BitArray Create (Bitmap bitmap)
         {
             var size    = 8;
@@ -111,7 +109,7 @@ namespace MapComparer.Model
         public static bool IsSimilar (BitArray hash1, BitArray hash2)
         {
             byte differentBits = CalcDifference(hash1, hash2);
-            return  differentBits < Distance;
+            return  differentBits < Threshold;
         }
     }
 

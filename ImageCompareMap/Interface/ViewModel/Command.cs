@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace MapComparer.viewmodel {
 
-    class RelayCommand : ICommand {
+    class Command : ICommand {
 
         private Action<object>      execute;
         private Func<object, bool>  canExecute;
@@ -14,11 +14,11 @@ namespace MapComparer.viewmodel {
         }
 
 
-        public RelayCommand(Action<object> executeAction) : this(executeAction, null) {
+        public Command(Action<object> executeAction) : this(executeAction, null) {
 
         }
 
-        public RelayCommand(Action<object> executeAction, Func<object, bool> canExecuteFunc) {
+        public Command(Action<object> executeAction, Func<object, bool> canExecuteFunc) {
             canExecute  = canExecuteFunc;
             execute     = executeAction;
         }
