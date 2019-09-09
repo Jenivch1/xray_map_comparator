@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace MapComparer.viewmodel
 {
-    public abstract class Observable : INotifyPropertyChanged {
+    public abstract class AbstractVM : INotifyPropertyChanged {
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName]string propertyName = "") {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

@@ -9,9 +9,9 @@ using MapComparer.viewmodel;
 namespace MapComparer.Model
 {
 
-    public class Texture : Observable
+    public class Texture : AbstractVM
     {
-        public static short previewSize = Storage.PreviewResolution;
+        public static short previewSize     = 128;
 
         private BitmapImage preview;
         public BitmapImage Preview
@@ -74,7 +74,6 @@ namespace MapComparer.Model
             Similar     = new ObservableCollection<Texture>();
         }
 
-        /// ???
         private static BitmapImage BitmapToImageSource (Bitmap bitmap)
         {
             BitmapImage bitmapImage = null;

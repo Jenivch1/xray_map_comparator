@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace MapComparer.viewmodel {
 
-    class Window1ViewModel : Observable {
+    class Window1ViewModel : AbstractVM {
 
         private ObservableCollection<Texture> textures;
 
@@ -27,7 +27,7 @@ namespace MapComparer.viewmodel {
 
         public ICommand ScanTextures {
             get {
-                return new RelayCommand(
+                return new Command(
                         (obj) => new ScanWindow().ShowDialog()
                     );
             }

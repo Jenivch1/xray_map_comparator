@@ -10,7 +10,7 @@ using System.Windows.Input;
 namespace MapComparer.viewmodel
 {
 
-    class ScanSetupViewModel : Observable
+    class ScanSetupViewModel : AbstractVM
     {
         private string  oldTexPath;
         public string OldTexPath
@@ -68,7 +68,7 @@ namespace MapComparer.viewmodel
         {
             get
             {
-                return new RelayCommand(
+                return new Command(
                         (obj) => TextureManager.ProcessTextures()
                     );
             }
@@ -78,7 +78,7 @@ namespace MapComparer.viewmodel
         {
             get
             {
-                return new RelayCommand(
+                return new Command(
                         (obj) => Storage.GetOldPath()
                     );
             }
@@ -88,7 +88,7 @@ namespace MapComparer.viewmodel
         {
             get
             {
-                return new RelayCommand(
+                return new Command(
                         (obj) => Storage.GetNewPath()
                     );
             }

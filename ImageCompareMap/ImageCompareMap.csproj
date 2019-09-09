@@ -64,32 +64,31 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\HashToStringConverter.cs" />
-    <Compile Include="Model\Storage.cs" />
-    <Compile Include="ViewModel\Base\Observable.cs" />
-    <Compile Include="ViewModel\Window1ViewModel.cs" />
-    <Compile Include="View\FindSimInAll.xaml.cs">
+    <Compile Include="Interface\ViewModel\AbstractVM.cs" />
+    <Compile Include="Interface\ViewModel\Window1ViewModel.cs" />
+    <Compile Include="Interface\View\FindSimInAll.xaml.cs">
       <DependentUpon>FindSimInAll.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StartupPage.xaml.cs">
+    <Compile Include="Interface\View\StartupPage.xaml.cs">
       <DependentUpon>StartupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Hash.cs" />
-    <Compile Include="ViewModel\ScanSetupViewModel.cs" />
-    <Compile Include="View\ScanWindow.xaml.cs">
+    <Compile Include="Interface\ViewModel\ScanSetupViewModel.cs" />
+    <Compile Include="Interface\View\ScanWindow.xaml.cs">
       <DependentUpon>ScanWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Window1.xaml.cs">
+    <Compile Include="Interface\View\Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\FindSimInAll.xaml">
+    <Page Include="Interface\View\FindSimInAll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\StartupPage.xaml">
+    <Page Include="Interface\View\StartupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="Interface\View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -98,22 +97,23 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\Texture.cs" />
-    <Compile Include="ViewModel\Base\RelayCommand.cs" />
-    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="Interface\ViewModel\Command.cs" />
+    <Compile Include="Interface\ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Model\TextureManager.cs" />
-    <Compile Include="View\MainWindow.xaml.cs">
+    <Compile Include="Interface\View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\ScanWindow.xaml">
+    <Page Include="Interface\View\ScanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Window1.xaml">
+    <Page Include="Interface\View\Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -150,8 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converter\" />
-    <Folder Include="View\Dialogs\" />
-    <Folder Include="View\Pages\" />
+    <Folder Include="Interface\View\Dialogs\" />
+    <Folder Include="Interface\View\Pages\" />
+    <Folder Include="Styles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

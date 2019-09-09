@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace MapComparer.viewmodel {
 
-    class MainWindowViewModel : Observable {
+    class MainWindowViewModel : AbstractVM {
 
         public ObservableCollection<Texture> Textures { get; set; }
 
@@ -33,7 +33,7 @@ namespace MapComparer.viewmodel {
 
         public ICommand ScanTextures {
             get {
-                return new RelayCommand(
+                return new Command(
                         (obj) => new ScanWindow().ShowDialog()
                     );
             }
@@ -41,7 +41,7 @@ namespace MapComparer.viewmodel {
 
         public ICommand SetMatch {
             get {
-                return new RelayCommand(
+                return new Command(
                         (obj) => SelectedTexture.SetMatch(SelectedSimilar),
                         (obj) => SelectedSimilar != null
                     );
@@ -50,7 +50,7 @@ namespace MapComparer.viewmodel {
 
         public ICommand RemSelected {
             get {
-                return new RelayCommand(
+                return new Command(
                         (obj) => TextureManager.RemoveTexture(SelectedTexture)
                         //,
                         //(obj) => SelectedTexture != null
@@ -60,7 +60,7 @@ namespace MapComparer.viewmodel {
 
         public ICommand ExportTexList {
             get {
-                return new RelayCommand(
+                return new Command(
                         (obj) => TextureManager.ExportTextureList()
                         //,
                         //check

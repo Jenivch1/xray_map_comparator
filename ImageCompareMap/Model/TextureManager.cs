@@ -11,6 +11,10 @@ namespace MapComparer.Model
 {
     static class TextureManager
     {
+        public static string                            OldTexturesPath     = @"C:\Users\User\Downloads\! stcs textures original\textures\crete";
+        public static string                            NewTexturesPath     = @"C:\Users\User\Downloads\! stcs textures original\textures\crete";
+        public static string                            IgnoredSubfolders   = @"act, andy, artifact, detail, glow, map, fx, pda, ed, hud, intro, icon, ui, internal, lights, pfx, terrain, sky, wm, water, wpn";
+        public static string                            IgnoredTextures     = @"sunmask.dds, ui_icons_npc_old.dds, water_sbumpvolume.dds, bump, bump#";
         private static List<string>                     ignoredFolders;
         public static ObservableCollection<Texture>     texturesOld;
         private static ObservableCollection<Texture>    texturesNew;
