@@ -11,8 +11,8 @@ namespace MapComparer.Model
 {
     static class TextureManager
     {
-        public static string                            OldTexturesPath     = @"C:\Users\User\Downloads\! stcs textures original\textures\crete";
-        public static string                            NewTexturesPath     = @"C:\Users\User\Downloads\! stcs textures original\textures\crete";
+        public static string                            OldTexturesPath     = @"C:\Users\User\Downloads\textures\textures_soc\crete";
+        public static string                            NewTexturesPath     = @"C:\Users\User\Downloads\textures\textures_cs\crete";
         public static string                            IgnoredSubfolders   = @"act, andy, artifact, detail, glow, map, fx, pda, ed, hud, intro, icon, ui, internal, lights, pfx, terrain, sky, wm, water, wpn";
         public static string                            IgnoredTextures     = @"sunmask.dds, ui_icons_npc_old.dds, water_sbumpvolume.dds, bump, bump#";
         private static List<string>                     ignoredFolders;
@@ -30,7 +30,7 @@ namespace MapComparer.Model
 
         static private void ParseIgnored ()
         {
-            var temp = Storage.IgnoredSubfolders
+            var temp = IgnoredSubfolders
                 .ToLower()
                 .Replace(" ", "")
                 .Replace("\t", "")
@@ -94,22 +94,6 @@ namespace MapComparer.Model
                     }
                 }
             }
-
-            // Version with removing.
-
-            //for (int i = texturesOld.Count - 1; i > -1; i--)
-            //{
-            //    var texture = texturesOld[i];
-            //    foreach (var texToCompare in texturesNew)
-            //    {
-            //        if (Hash.IsSimilar(texture.Hash, texToCompare.Hash))
-            //        {
-            //            ///TODO: dont add if has same subpath path
-            //            texture.Similar.Add(texToCompare);
-            //        }
-            //    }
-            //    if (texture.Similar.Count == 0) texturesOld.RemoveAt(i);
-            //}
         }
 
         public static void ProcessTextures ()
@@ -118,12 +102,9 @@ namespace MapComparer.Model
             texturesNew.Clear();
             ParseIgnored();
 
-            texturesOld = LoadTextures(Storage.OldTexturesPath);
-            texturesNew = LoadTextures(Storage.NewTexturesPath);
+            texturesOld = LoadTextures(OldTexturesPath);
+            texturesNew = LoadTextures(NewTexturesPath);
             FindSimilarTextures();
-
-            // TODO: Give user ability to switch similar from new textures.
-            texturesNew.Clear();
         }
 
         static public void ExportTextureList ()
@@ -139,10 +120,7 @@ namespace MapComparer.Model
             {
                 savePath = dialog.SelectedPath + @"\new_texture_paths.ini";
             }
-            else
-            {
-                return;
-            }
+            else return;
 
             //collect matches
             foreach (var texture in texturesOld)

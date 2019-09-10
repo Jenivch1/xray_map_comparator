@@ -13,12 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MapComparer.view {
-
-    public partial class StartupPage : UserControl {
-        public StartupPage() {
+namespace MapComparer.Interface
+{
+    /// <summary>
+    /// Логика взаимодействия для StartPage.xaml
+    /// </summary>
+    public partial class StartPage : Page
+    {
+        public StartPage ()
+        {
             InitializeComponent();
         }
-
     }
 }

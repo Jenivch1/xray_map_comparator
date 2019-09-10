@@ -4,11 +4,10 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
-using MapComparer.viewmodel;
+using MapComparer.Viewmodel;
 
 namespace MapComparer.Model
 {
-
     public class Texture : AbstractVM
     {
         public static short previewSize     = 128;
@@ -56,7 +55,6 @@ namespace MapComparer.Model
         }
 
         public ObservableCollection<Texture> Similar { get; set; }
-
 
         public Texture (Bitmap bitmap, string _path)
         {

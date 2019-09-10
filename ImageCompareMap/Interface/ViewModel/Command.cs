@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace MapComparer.viewmodel {
+namespace MapComparer.Viewmodel {
 
     class Command : ICommand {
 

@@ -12,16 +12,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MapComparer.view {
-
-    public partial class ScanWindow : Window {
-
-        public ScanWindow() {
+namespace MapComparer.Interface
+{
+    public partial class ScanDIalog : Window
+    {
+        public ScanDIalog ()
+        {
             InitializeComponent();
-
-            Loaded += delegate { Application.Current.MainWindow.Effect = new System.Windows.Media.Effects.BlurEffect() { Radius = 4 }; };
-            Closed += delegate { Application.Current.MainWindow.Effect = null; };
         }
-        
     }
 }
