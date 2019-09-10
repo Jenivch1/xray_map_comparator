@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace MapComparer.Model
+namespace MapComparer.Interface
 {
     class HashToStringConverter : IValueConverter
     {
-
         public object Convert (object value, Type targetType, object parameter, CultureInfo culture)
         {
-            BitArray    array   = (BitArray)value;
-            String      str     = string.Empty;
+            BitArray array = (BitArray)value;
+            String str  = string.Empty;
             foreach (var item in array)
             {
                 str = item is true ? "1" : "0";

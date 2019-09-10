@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mapcompare.Model
+namespace MapComparer.Model
 {
     class Utils
     {
-        private static string PickFolder ()
+        public static string PickFolder ()
         {
             return 
                 (new System.Windows.Forms.FolderBrowserDialog())

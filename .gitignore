@@ -4,3 +4,13 @@
 ImageCompareMap/obj/
 
 ImageCompareMap/bin/
+
+ImageCompareMap/Interface/View/FindSimInAll.xaml
+
+ImageCompareMap/Interface/View/ScanWindow.xaml
+
+ImageCompareMap/Interface/View/StartupPage.xaml
+
+ImageCompareMap/Interface/View/Window1.xaml
+
+ImageCompareMap/Interface/View/Window1.xaml.cs

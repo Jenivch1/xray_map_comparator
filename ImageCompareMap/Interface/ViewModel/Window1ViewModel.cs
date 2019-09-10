@@ -1,5 +1,4 @@
 ﻿using MapComparer.Model;
-using MapComparer.view;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,31 +7,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace MapComparer.viewmodel {
-
-    class Window1ViewModel : AbstractVM {
-
+namespace MapComparer.Viewmodel
+{
+    class Window1ViewModel : AbstractVM
+    {
         private ObservableCollection<Texture> textures;
-
-        public  ObservableCollection<Texture> Textures {
+        public ObservableCollection<Texture> Textures
+        {
             get => textures;
             set { textures = value; OnPropertyChanged(); }
         }
 
-
-        public Window1ViewModel() {
+        public Window1ViewModel ()
+        {
             textures = TextureManager.texturesOld;
         }
 
-
-        public ICommand ScanTextures {
-            get {
-                return new Command(
-                        (obj) => new ScanWindow().ShowDialog()
-                    );
-            }
-        }
+        //public ICommand ScanTextures {
+        //    get {
+        //        return new Command(
+        //                (obj) => new ScanDialog().ShowDialog()
+        //            );
+        //    }
+        //}
 
     }
-
 }

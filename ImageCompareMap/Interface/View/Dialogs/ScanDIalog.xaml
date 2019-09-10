@@ -1,0 +1,48 @@
+﻿<Window x:Class="MapComparer.Interface.ScanDIalog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapComparer.Interface" mc:Ignorable="d"
+        Title="ScanDialog" Height="300" Width="800" WindowStartupLocation="CenterOwner"
+        >
+    <DockPanel>
+        <Grid DockPanel.Dock="Bottom">
+            <Button Content="Scan textures" HorizontalAlignment="Right" 
+                    Command="{Binding ScanTextures}" CommandParameter="{Binding ElementName=ScanSetupWindow}"/>
+        </Grid>
+        <StackPanel Margin="40,20,40,0" >
+            <StackPanel>
+                <DockPanel >
+                    <TextBlock DockPanel.Dock="Left" Text="Original textures folder:" Margin="5" Width="150" VerticalAlignment="Center"/>
+                    <Button DockPanel.Dock="Right" Content="Open" Command="{Binding GetOldPath}"/>
+                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding Path=OldTexPath}"/>
+                </DockPanel>
+                <DockPanel >
+                    <TextBlock DockPanel.Dock="Left" Text="New textures folder:" Margin="5" Width="150" VerticalAlignment="Center"/>
+                    <Button DockPanel.Dock="Right" Content="Open" Command="{Binding GetNewPath}"/>
+                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding NewTexPath}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Left" Text="Subfolder to ignore:" Margin="5" Width="150"/>
+                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding IgnoredSubPaths}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Left" Text="Files to ignore:" Margin="5" Width="150"/>
+                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding IgnoredTextures}"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Left" Text="Preview size:" Margin="5" Width="150"/>
+                    <Slider Name="sliderRes" Margin="5" IsSnapToTickEnabled="True" Value="{Binding Path=Resolution, Mode=TwoWay}" 
+                            Minimum="12" Maximum="2048" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" 
+                            Ticks="12, 64, 128, 256, 512, 1024, 2048"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Left" Text="Similarity threshold:" Margin="5" Width="150"/>
+                    <Slider HorizontalAlignment="Stretch" Name="sliderMatch" Margin="5" IsSnapToTickEnabled="True" 
+                            Value="{Binding Path=Threshold, Mode=TwoWay}" Minimum="2" Maximum="8" TickPlacement="BottomRight" 
+                            AutoToolTipPlacement="BottomRight" Ticks="2, 3, 4, 5, 6, 7, 8"/>
+                </DockPanel>
+
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>

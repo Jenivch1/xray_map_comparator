@@ -7,47 +7,46 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace MapComparer.viewmodel
+namespace MapComparer.Viewmodel
 {
-
     class ScanSetupViewModel : AbstractVM
     {
-        private string  oldTexPath;
+        private string oldTexPath;
         public string OldTexPath
         {
             get => oldTexPath;
             set { oldTexPath = value; OnPropertyChanged(); }
         }
 
-        private string  newTexPath;
+        private string newTexPath;
         public string NewTexPath
         {
             get => newTexPath;
             set { newTexPath = value; OnPropertyChanged(); }
         }
 
-        private short   resolution;
+        private short resolution;
         public short Resolution
         {
             get => resolution;
             set { resolution = value; OnPropertyChanged(); }
         }
 
-        private byte    threshold;
+        private byte threshold;
         public byte Threshold
         {
             get => threshold;
             set { threshold = value; OnPropertyChanged(); }
         }
 
-        private string  ignoredSubPaths;
+        private string ignoredSubPaths;
         public string IgnoredSubPaths
         {
             get => ignoredSubPaths;
             set { ignoredSubPaths = value; OnPropertyChanged(); }
         }
 
-        private string  ignoredTextures;
+        private string ignoredTextures;
         public string IgnoredTextures
         {
             get => ignoredTextures;
@@ -56,12 +55,12 @@ namespace MapComparer.viewmodel
 
         public ScanSetupViewModel ()
         {
-            oldTexPath      = Storage.OldTexturesPath;
-            newTexPath      = Storage.NewTexturesPath;
-            resolution      = Storage.PreviewResolution;
-            threshold       = Storage.MatchThreshold;
-            ignoredSubPaths = Storage.IgnoredSubfolders;
-            ignoredTextures = Storage.IgnoredTextures;
+            //oldTexPath      = Storage.OldTexturesPath;
+            //newTexPath      = Storage.NewTexturesPath;
+            //resolution      = Storage.PreviewResolution;
+            //threshold       = Storage.MatchThreshold;
+            //ignoredSubPaths = Storage.IgnoredSubfolders;
+            //ignoredTextures = Storage.IgnoredTextures;
         }
 
         public ICommand ScanTextures
@@ -79,7 +78,7 @@ namespace MapComparer.viewmodel
             get
             {
                 return new Command(
-                        (obj) => Storage.GetOldPath()
+                        (obj) => OldTexPath = Utils.PickFolder()
                     );
             }
         }
@@ -89,7 +88,7 @@ namespace MapComparer.viewmodel
             get
             {
                 return new Command(
-                        (obj) => Storage.GetNewPath()
+                        (obj) => NewTexPath = Utils.PickFolder()
                     );
             }
         }
