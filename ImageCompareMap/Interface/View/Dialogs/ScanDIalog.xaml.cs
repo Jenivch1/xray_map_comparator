@@ -14,9 +14,9 @@ using System.Windows.Shapes;
 
 namespace MapComparer.Interface
 {
-    public partial class ScanDIalog : Window
+    public partial class ScanDialog : Window
     {
-        public ScanDIalog ()
+        public ScanDialog ()
         {
             InitializeComponent();
         }

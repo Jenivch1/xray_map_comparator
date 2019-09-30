@@ -8,57 +8,45 @@ using System.Windows.Input;
 
 namespace MapComparer.Viewmodel
 {
-    class MainWindowViewModel : AbstractVM
+    class MainWindowViewModel : Notifyable
     {
-        public ObservableCollection<Texture> Textures   { get; set; }
-
-        private Texture selectedTexture;
-        public Texture SelectedTexture
-        {
-            get => selectedTexture;
-            set { selectedTexture = value; OnPropertyChanged(); }
-        }
-
-        private Texture selectedSimilar;
-        public Texture SelectedSimilar
-        {
-            get => selectedSimilar;
-            set { selectedSimilar = value; OnPropertyChanged(); }
-        }
-
+        public ObservableCollection<Texture> OldTextures    { get; set; }
+        public ObservableCollection<Texture> NewTextures    { get; set; }
 
         public MainWindowViewModel ()
         {
-            Textures = TextureManager.texturesOld;
+            OldTextures = TextureManager.texturesOld;
+            NewTextures = TextureManager.texturesNew;
         }
 
-        //public ICommand ScanTextures {
-        //    get {
-        //        return new Command(
-        //                (obj) => new ScanWindow().ShowDialog()
-        //            );
-        //    }
-        //}
-
-        public ICommand SetMatch
+        public ICommand ScanTextures
         {
             get
             {
                 return new Command(
-                        (obj) => SelectedTexture.SetMatch(SelectedSimilar),
-                        (obj) => SelectedSimilar != null
+                        (obj) => new Interface.ScanDialog().ShowDialog()
                     );
             }
         }
+
+            //public ICommand SetMatch
+            //{
+            //    get
+            //    {
+            //        return new Command(
+            //                (obj) => SelectedTexture.SetMatch(obj as Texture),
+            //                (obj) => obj != null
+            //            );
+            //    }
+            //}
 
         public ICommand RemSelected
         {
             get
             {
                 return new Command(
-                        (obj) => TextureManager.RemoveTexture(SelectedTexture)
-                        //,
-                        //(obj) => SelectedTexture != null
+                        (obj) => TextureManager.RemoveTexture(obj as Texture),
+                        (obj) => obj != null
                     );
             }
         }
@@ -69,8 +57,7 @@ namespace MapComparer.Viewmodel
             {
                 return new Command(
                         (obj) => TextureManager.ExportTextureList()
-                        //,
-                        //check
+                        //,check
                     );
             }
         }

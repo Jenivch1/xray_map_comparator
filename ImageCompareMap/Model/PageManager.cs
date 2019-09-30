@@ -13,6 +13,7 @@ namespace MapComparer.Model
     static class PageManager
     {
         private static Dictionary<Pages, Page>  pages;
+        public static Frame frame;
 
         static PageManager ()
         {
@@ -23,7 +24,7 @@ namespace MapComparer.Model
             };
         }
 
-        public static void SetFramePage (Frame frame, Pages page)
+        public static void SetFramePage (Pages page)
         {
             frame.Content = pages[page];
         }

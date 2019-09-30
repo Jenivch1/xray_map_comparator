@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace MapComparer.Viewmodel
 {
-    class Window1ViewModel : AbstractVM
+    class StartPageViewModel : Notifyable
     {
         private ObservableCollection<Texture> textures;
         public ObservableCollection<Texture> Textures
@@ -18,18 +18,20 @@ namespace MapComparer.Viewmodel
             set { textures = value; OnPropertyChanged(); }
         }
 
-        public Window1ViewModel ()
+        public StartPageViewModel ()
         {
             textures = TextureManager.texturesOld;
         }
 
-        //public ICommand ScanTextures {
-        //    get {
-        //        return new Command(
-        //                (obj) => new ScanDialog().ShowDialog()
-        //            );
-        //    }
-        //}
+        public ICommand ScanTextures
+        {
+            get
+            {
+                return new Command(
+                        (obj) => new Interface.ScanDialog().ShowDialog()
+                    );
+            }
+        }
 
     }
 }

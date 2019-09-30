@@ -20,7 +20,13 @@ namespace MapComparer.Interface
         public MainWindow ()
         {
             InitializeComponent();
-            PageManager.SetFramePage(frmWindowContent, Pages.Start);
+
+            PageManager.frame = frmWindowContent;
+            //PageManager.SetFramePage(Pages.Start);
+
+            PageManager.SetFramePage(Pages.Main);
+            TextureManager.ProcessTextures();
+
         }
     }
 }

@@ -1,15 +1,9 @@
 ﻿using MapComparer.Model;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace MapComparer.Viewmodel
 {
-    class ScanSetupViewModel : AbstractVM
+    class ScanSetupViewModel : Notifyable
     {
         private string oldTexPath;
         public string OldTexPath
@@ -61,6 +55,13 @@ namespace MapComparer.Viewmodel
             //threshold       = Storage.MatchThreshold;
             //ignoredSubPaths = Storage.IgnoredSubfolders;
             //ignoredTextures = Storage.IgnoredTextures;
+
+            OldTexPath      = TextureManager.OldTexturesPath;
+            NewTexPath      = TextureManager.NewTexturesPath;
+            Resolution      = Texture.previewSize;
+            Threshold       = Hash.Threshold;
+            IgnoredTextures = TextureManager.IgnoredTextures;
+            IgnoredSubPaths = TextureManager.IgnoredTextures;
         }
 
         public ICommand ScanTextures
@@ -68,7 +69,16 @@ namespace MapComparer.Viewmodel
             get
             {
                 return new Command(
-                        (obj) => TextureManager.ProcessTextures()
+                        (obj) => {
+                            /// TODO: Remove all logic from VM.
+                            TextureManager.OldTexturesPath  = OldTexPath;
+                            TextureManager.NewTexturesPath  = NewTexPath;
+                            Hash.Threshold                  = Threshold;
+                            Texture.previewSize             = Resolution;
+                            TextureManager.ProcessTextures();
+                            PageManager.SetFramePage(Pages.Main);
+                            // Close scan dialog.
+                        }
                     );
             }
         }

@@ -8,7 +8,7 @@ using MapComparer.Viewmodel;
 
 namespace MapComparer.Model
 {
-    public class Texture : AbstractVM
+    public class Texture : Notifyable
     {
         public static short previewSize     = 128;
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MapComparer.Viewmodel
 {
-    public abstract class AbstractVM : INotifyPropertyChanged {
+    public abstract class Notifyable : INotifyPropertyChanged {
 
         public event PropertyChangedEventHandler PropertyChanged;
 

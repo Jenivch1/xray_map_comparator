@@ -17,7 +17,7 @@ namespace MapComparer.Model
         public static string                            IgnoredTextures     = @"sunmask.dds, ui_icons_npc_old.dds, water_sbumpvolume.dds, bump, bump#";
         private static List<string>                     ignoredFolders;
         public static ObservableCollection<Texture>     texturesOld;
-        private static ObservableCollection<Texture>    texturesNew;
+        public static ObservableCollection<Texture>     texturesNew;
 
 
         static TextureManager ()
@@ -105,6 +105,7 @@ namespace MapComparer.Model
             texturesOld = LoadTextures(OldTexturesPath);
             texturesNew = LoadTextures(NewTexturesPath);
             FindSimilarTextures();
+            MessageBox.Show(texturesOld.Count.ToString());
         }
 
         static public void ExportTextureList ()
