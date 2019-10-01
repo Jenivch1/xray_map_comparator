@@ -9,18 +9,39 @@ using System.Windows.Input;
 
 namespace MapComparer.Viewmodel
 {
-    class StartPageViewModel : Notifyable
+    class StartPageViewModel : BindableObject
     {
+        private TextureManager model;
+        public TextureManager Model
+        {
+            get
+            {
+                return model;
+            }
+            set
+            {
+                model = value; OnPropertyChanged();
+            }
+        }
+
         private ObservableCollection<Texture> textures;
         public ObservableCollection<Texture> Textures
         {
-            get => textures;
-            set { textures = value; OnPropertyChanged(); }
+            get
+            {
+                return textures;
+            }
+            set
+            {
+                textures = value;
+                OnPropertyChanged();
+            }
         }
 
         public StartPageViewModel ()
         {
-            textures = TextureManager.texturesOld;
+            Model = TextureManager.Instance;
+            //textures = TextureManager.texturesOld;
         }
 
         public ICommand ScanTextures

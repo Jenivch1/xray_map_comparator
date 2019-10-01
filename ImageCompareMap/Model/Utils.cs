@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MapComparer.Model
 {
@@ -10,9 +11,14 @@ namespace MapComparer.Model
     {
         public static string PickFolder ()
         {
-            return 
-                (new System.Windows.Forms.FolderBrowserDialog())
-                .SelectedPath;
+            var dialog = new FolderBrowserDialog();
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.SelectedPath;
+            }
+
+            return "";
         }
     }
 }

@@ -1,8 +1,12 @@
 ﻿<Window x:Class="MapComparer.Interface.ScanDialog"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MapComparer.Interface" mc:Ignorable="d" xmlns:viewmodel="clr-namespace:MapComparer.Viewmodel"
-        Title="ScanDialog" Height="300" Width="800" WindowStartupLocation="CenterOwner"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapComparer.Interface" 
+        xmlns:viewmodel="clr-namespace:MapComparer.Viewmodel"
+        mc:Ignorable="d" Title="ScanDialog" Height="300" Width="800" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         >
     <Window.DataContext>
         <viewmodel:ScanSetupViewModel/>
@@ -12,25 +16,25 @@
             <Button Content="Scan textures" HorizontalAlignment="Right" 
                     Command="{Binding ScanTextures}" CommandParameter="{Binding ElementName=ScanSetupWindow}"/>
         </Grid>
-        <StackPanel Margin="40,20,40,0" >
+        <StackPanel Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel>
                 <DockPanel >
                     <TextBlock DockPanel.Dock="Left" Text="Original textures folder:" Margin="5" Width="150" VerticalAlignment="Center"/>
                     <Button DockPanel.Dock="Right" Content="Open" Command="{Binding GetOldPath}"/>
-                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding Path=OldTexPath}"/>
+                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding Path=Model.OldTexturesPath}"/>
                 </DockPanel>
                 <DockPanel >
                     <TextBlock DockPanel.Dock="Left" Text="New textures folder:" Margin="5" Width="150" VerticalAlignment="Center"/>
                     <Button DockPanel.Dock="Right" Content="Open" Command="{Binding GetNewPath}"/>
-                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding NewTexPath}"/>
+                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding Model.NewTexturesPath}"/>
                 </DockPanel>
                 <DockPanel>
                     <TextBlock DockPanel.Dock="Left" Text="Subfolder to ignore:" Margin="5" Width="150"/>
-                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding IgnoredSubPaths}"/>
+                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding Model.IgnoredSubfolders}"/>
                 </DockPanel>
                 <DockPanel>
                     <TextBlock DockPanel.Dock="Left" Text="Files to ignore:" Margin="5" Width="150"/>
-                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding IgnoredTextures}"/>
+                    <TextBox VerticalAlignment="Center" Margin="5" Text="{Binding Model.IgnoredTextures}"/>
                 </DockPanel>
                 <DockPanel>
                     <TextBlock DockPanel.Dock="Left" Text="Preview size:" Margin="5" Width="150"/>

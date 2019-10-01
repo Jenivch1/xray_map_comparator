@@ -1,4 +1,5 @@
 ﻿using Imaging.DDSReader;
+using MapComparer.Viewmodel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,84 +10,122 @@ using System.Windows.Forms;
 
 namespace MapComparer.Model
 {
-    static class TextureManager
+    class TextureManager : BindableObject
     {
-        public static string                            OldTexturesPath     = @"C:\Users\User\Downloads\textures\textures_soc\crete";
-        public static string                            NewTexturesPath     = @"C:\Users\User\Downloads\textures\textures_cs\crete";
-        public static string                            IgnoredSubfolders   = @"act, andy, artifact, detail, glow, map, fx, pda, ed, hud, intro, icon, ui, internal, lights, pfx, terrain, sky, wm, water, wpn";
-        public static string                            IgnoredTextures     = @"sunmask.dds, ui_icons_npc_old.dds, water_sbumpvolume.dds, bump, bump#";
-        private static List<string>                     ignoredFolders;
-        public static ObservableCollection<Texture>     texturesOld;
-        public static ObservableCollection<Texture>     texturesNew;
+        private static TextureManager           instance;
+        private ObservableCollection<Texture>   texturesNew;
+        private ObservableCollection<Texture>   texturesOld;
+        private string                          oldTexturesPath;
+        private string                          newTexturesPath;
 
+        //fix
+        public string        IgnoredSubfolders  { get; set; }
+        public string        IgnoredTextures    { get; set; }
+        private List<string> ignoredFolders     { get; set; }
 
-        static TextureManager ()
+        public static TextureManager Instance
         {
-            ignoredFolders  = new List<string>();
-            texturesOld     = new ObservableCollection<Texture>();
-            texturesNew     = new ObservableCollection<Texture>();
+            get
+            {
+                if (instance == null) { instance = new TextureManager(); }
+                return instance;
+            }
+            private set => instance = value;
         }
 
+        public string NewTexturesPath
+        {
+            get => newTexturesPath;
+            set { newTexturesPath = value; OnPropertyChanged(); }
+        }
 
-        static private void ParseIgnored ()
+        public string OldTexturesPath
+        {
+            get => oldTexturesPath;
+            set { oldTexturesPath = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<Texture> TexturesOld
+        {
+            get => texturesOld;
+            set { texturesOld = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<Texture> TexturesNew
+        {
+            get => texturesNew;
+            set { texturesNew = value; OnPropertyChanged(); }
+        }
+
+        private TextureManager()
+        {
+#if DEBUG
+            //TODO: Remove
+            OldTexturesPath = @"C:\Users\User\Downloads\textures\textures_soc\crete";
+            NewTexturesPath = @"C:\Users\User\Downloads\textures\textures_cs\crete";
+            IgnoredSubfolders = @"act, andy, artifact, detail, glow, map, fx, pda, ed, hud, intro, icon, ui, internal, lights, pfx, terrain, sky, wm, water, wpn";
+            IgnoredTextures = @"sunmask.dds, ui_icons_npc_old.dds, water_sbumpvolume.dds, bump, bump#";
+#endif
+            ignoredFolders = new List<string>();
+            TexturesOld = new ObservableCollection<Texture>();
+            TexturesNew = new ObservableCollection<Texture>();
+        }
+
+        private void ParseIgnored()
         {
             var temp = IgnoredSubfolders
-                .ToLower()
-                .Replace(" ", "")
-                .Replace("\t", "")
-                .Split(',');
+                        .ToLower()
+                        .Replace(" ", "")
+                        .Replace("\t", "")
+                        .Split(',');
             ignoredFolders = new List<string>(temp);
         }
 
-        private static bool IsIgnored (string path)
+        private bool IsIgnored(string path)
         {
-            var pathSubDir = Path.GetFileName(Path.GetDirectoryName(path.ToLower()));
-
-            if (ignoredFolders.Contains(pathSubDir))
-            {
-                return true;
-            }
-
-            return false;
+            var pathDirectory = Path.GetFileName(Path.GetDirectoryName(path.ToLower()));
+            return ignoredFolders.Contains(pathDirectory);
         }
 
-        static private ObservableCollection<Texture> LoadTextures (string dir)
+        private ObservableCollection<Texture> LoadTextures(string directoryPath)
         {
-            string[] paths = Directory.GetFiles(dir, "*.dds", SearchOption.AllDirectories);
+            string[] paths = Directory.GetFiles(directoryPath, "*.dds", SearchOption.AllDirectories);
             var textures = new ObservableCollection<Texture>();
 
             foreach (var file in paths)
             {
-                if (IsIgnored(file)) continue;
-                Bitmap bitmap = null;
-                
-                try
+                if (!IsIgnored(file))
                 {
-                    bitmap = DDS.LoadImage(file);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"\n[ERROR] Failed to load texture.\n{file}\n{e.Message}\n\n");
-                    continue;
-                }
+                    Bitmap bitmap = null;
 
-                textures.Add(new Texture(bitmap, file));
-                bitmap.Dispose();
+                    try
+                    {
+                        bitmap = DDS.LoadImage(file);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"\n[ERROR] Failed to load texture.\n{file}\n{e.Message}\n\n");
+                        continue;
+                    }
+
+                    textures.Add(new Texture(bitmap, file));
+                    bitmap.Dispose();
+                }
             }
 
             return textures;
         }
 
-        static public void RemoveTexture (Texture texture)
+        public void RemoveTexture(Texture texture)
         {
-            texturesOld.Remove(texture);
+            TexturesOld.Remove(texture);
         }
 
-        static private void FindSimilarTextures ()
+        private void FindSimilarTextures()
         {
-            foreach (var texture in texturesOld)
+            foreach (var texture in TexturesOld)
             {
-                foreach (var newTexture in texturesNew)
+                foreach (var newTexture in TexturesNew)
                 {
                     if (Hash.IsSimilar(texture.Hash, newTexture.Hash))
                     {
@@ -96,24 +135,24 @@ namespace MapComparer.Model
             }
         }
 
-        public static void ProcessTextures ()
+        public void ProcessTextures()
         {
-            texturesOld.Clear();
-            texturesNew.Clear();
+            TexturesOld.Clear();
+            TexturesNew.Clear();
             ParseIgnored();
 
-            texturesOld = LoadTextures(OldTexturesPath);
-            texturesNew = LoadTextures(NewTexturesPath);
+            TexturesOld = LoadTextures(OldTexturesPath);
+            TexturesNew = LoadTextures(NewTexturesPath);
             FindSimilarTextures();
-            MessageBox.Show(texturesOld.Count.ToString());
+            //MessageBox.Show(TexturesOld.Count.ToString());
         }
 
-        static public void ExportTextureList ()
+        public void ExportTextureList()
         {
-            var savePath        = string.Empty;
-            var texturePaths    = new Dictionary<string, string>();
-            var align           = 10;
-            var builder         = new StringBuilder("[new_texture_paths]");
+            var savePath = string.Empty;
+            var texturePaths = new Dictionary<string, string>();
+            var align = 10;
+            var builder = new StringBuilder("[new_texture_paths]");
 
             //pick folder
             var dialog = new FolderBrowserDialog();
@@ -124,30 +163,30 @@ namespace MapComparer.Model
             else return;
 
             //collect matches
-            foreach (var texture in texturesOld)
+            foreach (var texture in TexturesOld)
             {
                 if (texture.BestMatch != null)
                 {
                     var keyName = Path.GetFileNameWithoutExtension(texture.Path);
-                    var keyDir  = Path.GetFileName(Path.GetDirectoryName(texture.Path));
-                    var key     = Path.Combine(keyDir, keyName);
+                    var keyDir = Path.GetFileName(Path.GetDirectoryName(texture.Path));
+                    var key = Path.Combine(keyDir, keyName);
 
                     var valName = Path.GetFileNameWithoutExtension(texture.BestMatch.Path);
-                    var valDir  = Path.GetFileName(Path.GetDirectoryName(texture.BestMatch.Path));
-                    var value   = Path.Combine(valDir, valName);
+                    var valDir = Path.GetFileName(Path.GetDirectoryName(texture.BestMatch.Path));
+                    var value = Path.Combine(valDir, valName);
 
                     texturePaths.Add(key, value);
                 }
             }
-            
+
             //check matches exist
             if (texturePaths.Count == 0)
             {
-                MessageBox.Show("No texture matches to save!");
+                MessageBox.Show("No texture matches to save!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            //find offset
+            //find align offset
             foreach (var key in texturePaths.Keys)
             {
                 if (key.Length > align) align = key.Length;
@@ -160,14 +199,14 @@ namespace MapComparer.Model
                 builder.AppendFormat("\n{0, -" + align + "} = {1}", key, value);
             }
 
-            //save
+            //try save
             try
             {
                 File.WriteAllText(savePath, builder.ToString());
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, ex.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

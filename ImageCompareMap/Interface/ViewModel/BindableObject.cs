@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace MapComparer.Viewmodel
 {
-    public abstract class Notifyable : INotifyPropertyChanged {
+    public abstract class BindableObject : INotifyPropertyChanged
+    {
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName]string propertyName = "") {
+        public void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }

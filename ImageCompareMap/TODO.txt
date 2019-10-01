@@ -1,5 +1,6 @@
 menu: faq, about
-use dct hash
+add dct hash algorithm
+auto mode
 auto detect match by distance
 -add "Remove texture" button for old textures
 -allow user select match from all textures

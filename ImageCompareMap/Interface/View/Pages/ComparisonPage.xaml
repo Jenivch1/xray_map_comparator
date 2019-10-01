@@ -4,9 +4,21 @@
       xmlns:local="clr-namespace:MapComparer.Interface" mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800" 
       xmlns:viewmodel="clr-namespace:MapComparer.Viewmodel" Title="ComparisonPage" Background="#aaa"
       >
+    
+    <!-- Only for intelisense. Remove in release. -->
     <Page.DataContext>
         <viewmodel:MainWindowViewModel/>
     </Page.DataContext>
+
+    <Page.InputBindings>
+        <KeyBinding Command="{Binding Test}"                Key="T" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding ScanTextures}"        Key="S" Modifiers="Alt"/>
+        <KeyBinding Command="{Binding SelectNextImage}"      Key="D"
+                    CommandParameter="{Binding ElementName=lbTextures}"/>
+        <KeyBinding Command="{Binding SelectPrevImage}"      Key="A"
+                    CommandParameter="{Binding ElementName=lbTextures}"/>
+    </Page.InputBindings>
+    
     <DockPanel>
         <Grid DockPanel.Dock="Top" Background="#bbb">
             <Menu HorizontalAlignment="Left" Background="Transparent">
@@ -32,9 +44,11 @@
             <Label Name="lblStatus" Content="status" Padding="0" HorizontalAlignment="Center"/>
         </Grid>
 
-        <DockPanel DockPanel.Dock="Right" Background="#bbb">
+        <DockPanel DockPanel.Dock="Right" Background="#bbb" MaxWidth="200">
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                <Button Content="Set as best match" Command="{Binding ElementName=lbTextures, Path=SelectedItem.SetMatch}" CommandParameter="{Binding ElementName=lbSimilarTextures, Path=SelectedItem}" />
+                <Button Content="Set as best match" 
+                        Command="{Binding ElementName=lbTextures, Path=SelectedItem.SetMatch}" 
+                        CommandParameter="{Binding ElementName=lbSimilarTextures, Path=SelectedItem}" />
                 <Button Content="Add to similar"/>
             </StackPanel>
             <TabControl>
@@ -43,17 +57,41 @@
                         <Grid DockPanel.Dock="Top">
                             <TextBlock Text="{Binding ElementName=lbTextures, Path=SelectedItem.Similar.Count}" HorizontalAlignment="Right"/>
                         </Grid>
-                        <ListBox Name="lbSimilarTextures" 
-                                 ItemsSource="{Binding ElementName=lbTextures, Path=SelectedItem.Similar}">
+                        <ListBox Name="lbSimilarTextures" ItemsSource="{Binding ElementName=lbTextures, Path=SelectedItem.Similar}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Height="30" Margin="2" Source="{Binding Path=Preview}"/>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Margin="2" FontSize="10" Text="{Binding Path=Path}"/>
+                                            <TextBlock Margin="2" FontSize="12" Text="{Binding Path=Name}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </DockPanel>
                 </TabItem>
                 <TabItem Header="All bew texture">
                     <DockPanel Margin="5">
                         <Grid DockPanel.Dock="Top">
-                            <TextBlock Text="{Binding Path=NewTextures.Count}" HorizontalAlignment="Right"/>
+                            <TextBlock Text="{Binding Path=Model.TexturesNew.Count}" HorizontalAlignment="Right"/>
                         </Grid>
-                        <ListBox ItemsSource="{Binding Path=NewTextures}" />
+                        <ListBox ItemsSource="{Binding Path=Model.TexturesNew}">
+                            
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Image Height="60" Margin="5" Source="{Binding Path=Preview}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+
+                        </ListBox>
                     </DockPanel>
                 </TabItem>
             </TabControl>
@@ -62,7 +100,7 @@
         <DockPanel>
             <Grid DockPanel.Dock="Bottom" Background="#bbb" Margin="2" Height="50">
                 <ListBox Name="lbTextures" Margin="5" Background="#bababa" 
-                         ItemsSource="{Binding Path=OldTextures, Mode=TwoWay}">
+                         ItemsSource="{Binding Path=Model.TexturesOld}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True" />
@@ -84,7 +122,8 @@
 
             <Grid>
                 <Grid.Background>
-                    <ImageBrush ImageSource="..\..\..\Images\checker.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,20,20" Opacity="0.1"/>
+                    <ImageBrush ImageSource="..\..\..\Images\checker.png" TileMode="Tile" 
+                                ViewportUnits="Absolute" Viewport="0,0,20,20" Opacity="0.2"/>
                 </Grid.Background>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -92,7 +131,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="1" Margin="20,20,40,20" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Image Source="{Binding ElementName=lbSimilarTextures, Path=SelectedItem.Preview}"/>
+                    <Image Source="{Binding ElementName=lbSimilarTextures, Path=SelectedItem.Preview}">
+                        <Image.Effect>
+                            <DropShadowEffect BlurRadius="60" Direction="-120" ShadowDepth="25" Opacity="0.6"/>
+                        </Image.Effect>
+                    </Image>
                     <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5" Background="#2fff">
                         <TextBlock Padding="0" Text="{Binding Path=SelectedSimilar.Resolution}"/>
                         <TextBlock Padding="0" Text="{Binding Path=SelectedSimilar.Name}"/>
@@ -103,7 +146,11 @@
                 </Grid>
 
                 <Grid Grid.Column="0" Margin="40,20,20,20" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Image Source="{Binding ElementName=lbTextures, Path=SelectedItem.Preview}"/>
+                    <Image Source="{Binding ElementName=lbTextures, Path=SelectedItem.Preview}">
+                        <Image.Effect>
+                            <DropShadowEffect BlurRadius="60" Direction="-120" ShadowDepth="25" Opacity="0.6"/>
+                        </Image.Effect>
+                    </Image>
                     <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5" Background="#2fff">
                         <TextBlock Padding="0" Text="{Binding Path=SelectedTexture.Resolution}"/>
                         <TextBlock Padding="0" Text="{Binding Path=SelectedTexture.Name}"/>

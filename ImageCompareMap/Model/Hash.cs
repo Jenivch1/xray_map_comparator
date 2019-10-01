@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 
 namespace MapComparer.Model
 {
-    /// Perceptive hash: https://habr.com/ru/post/120562/. 5\64 is good similarity for this algorithm.
+    /// <summary>
+    /// Perceptive hash: https://habr.com/ru/post/120562/. 
+    /// 5\64 is good similarity for this algorithm.
+    /// </summary>
     static class Hash
     {
         public static byte  Threshold   = 5;

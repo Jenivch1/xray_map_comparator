@@ -91,7 +91,7 @@
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\HashToStringConverter.cs" />
-    <Compile Include="Interface\ViewModel\Notifyable.cs" />
+    <Compile Include="Interface\ViewModel\BindableObject.cs" />
     <Compile Include="Interface\ViewModel\StartPageViewModel.cs" />
     <Compile Include="Model\Hash.cs" />
     <Compile Include="Interface\ViewModel\ScanSetupViewModel.cs" />
@@ -174,7 +174,9 @@
   <ItemGroup>
     <Resource Include="Images\icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\Infrastructure\" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>

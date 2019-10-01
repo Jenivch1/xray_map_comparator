@@ -25,7 +25,6 @@ namespace MapComparer.Interface
             //PageManager.SetFramePage(Pages.Start);
 
             PageManager.SetFramePage(Pages.Main);
-            TextureManager.ProcessTextures();
 
         }
     }
