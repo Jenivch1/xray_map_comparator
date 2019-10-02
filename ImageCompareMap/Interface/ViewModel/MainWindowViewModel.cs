@@ -9,6 +9,17 @@ using System.Windows.Input;
 
 namespace MapComparer.Viewmodel
 {
+
+    /// commands
+    /// 
+    /// next imame
+    /// prev image
+    /// next similar
+    /// prev similar
+    /// set match
+    /// add to matches
+
+
     class MainWindowViewModel : BindableObject
     {
         private TextureManager model;
@@ -19,7 +30,22 @@ namespace MapComparer.Viewmodel
             }
             set
             {
-                model = value; OnPropertyChanged();
+                model = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Texture selectedTexture;
+        public Texture SelectedTexture
+        {
+            get
+            {
+                return selectedTexture;
+            }
+            set
+            {
+                selectedTexture = value;
+                OnPropertyChanged();
             }
         }
 
@@ -43,18 +69,20 @@ namespace MapComparer.Viewmodel
             }
         }
 
-        //public ICommand SetMatch
-        //{
-        //    get
-        //    {
-        //        return new Command(
-        //                (obj) => SelectedTexture.SetMatch(obj as Texture),
-        //                (obj) => obj != null
-        //            );
-        //    }
-        //}
+        public ICommand SetSimilarAsMatch
+        {
+            get
+            {
+                return new Command(
+                        (obj) => {
+                            SelectedTexture.SetMatch(obj as Texture);
+                        },
+                        (obj) => (obj != null && obj is Texture)
+                    );
+            }
+        }
 
-        public ICommand RemSelected
+        public ICommand RemoveSelected
         {
             get
             {
@@ -98,6 +126,7 @@ namespace MapComparer.Viewmodel
             }
         }
 
+        /// Add: Seelect irst similar if we have one.
         public ICommand SelectPrevImage
         {
             get
@@ -125,7 +154,35 @@ namespace MapComparer.Viewmodel
             get
             {
                 return new Command(
-                        (obj) => Model.ExportTextureList()
+                        (obj) =>
+                        {
+                            var listbox = obj as ListBox;
+                            listbox.SelectedIndex = (listbox.SelectedIndex == listbox.Items.Count - 1 || listbox.SelectedIndex == -1)
+                                ? 0
+                                : listbox.SelectedIndex + 1;
+                        }
+                    );
+            }
+        }
+
+        public ICommand SelectPrevSimilarImage
+        {
+            get
+            {
+                return new Command(
+                        (obj) =>
+                        {
+                            if (obj is ListBox)
+                            {
+                                var listbox = obj as ListBox;
+                                if (!listbox.Items.IsEmpty)
+                                {
+                                    listbox.SelectedIndex = (listbox.SelectedIndex == 0 || listbox.SelectedIndex == -1)
+                                        ? listbox.Items.Count - 1
+                                        : listbox.SelectedIndex - 1;
+                                }
+                            }
+                        }
                     );
             }
         }
