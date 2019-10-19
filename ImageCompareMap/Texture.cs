@@ -8,71 +8,73 @@ using MapComparer.Viewmodel;
 
 namespace MapComparer.Model
 {
-    public class Texture : BindableObject
+    public class Texture : BindableObject, ITexture
     {
-        public static short previewSize     = 128;
+        public static short previewSize = 128;
 
         private BitmapImage preview;
         public BitmapImage Preview
         {
             get => preview;
-            set { preview = value; OnPropertyChanged(); }
+            private set { preview = value; OnPropertyChanged(); }
         }
 
-        private string  path;
+        private string path;
         public string Path
         {
             get => path;
-            set { path = value; OnPropertyChanged(); }
+            private set { path = value; OnPropertyChanged(); }
         }
 
-        private string  name;
+        private string name;
         public string Name
         {
             get => name;
-            set { name = value; OnPropertyChanged(); }
+            private set { name = value; OnPropertyChanged(); }
         }
 
-        private string  resolution;
+        private string resolution;
         public string Resolution
         {
             get => resolution;
-            set { resolution = value; OnPropertyChanged(); }
+            private set { resolution = value; OnPropertyChanged(); }
         }
 
         private BitArray hash;
         public BitArray Hash
         {
             get => hash;
-            set { hash = value; OnPropertyChanged(); }
+            private set { hash = value; OnPropertyChanged(); }
         }
 
-        private Texture bestMatch;
-        public Texture BestMatch
+        private ITexture match;
+        public ITexture Match
         {
-            get => bestMatch;
-            set { bestMatch = value; OnPropertyChanged(); }
+            get => match;
+            set { match = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Texture> Similar { get; set; }
+        public ObservableCollection<ITexture> Similar { get; set; }
 
-        public Texture (Bitmap bitmap, string _path)
+        public Texture(Bitmap bitmap, string path, BitArray hash)
         {
             using (var thumbnail = new Bitmap(bitmap, new Size(previewSize, previewSize)))
             {
                 preview = BitmapToImageSource(thumbnail);
                 //var prev = new BitmapImage(new System.Uri(_path));
             }
-            Hash        = Model.Hash.Create(bitmap);
-            // Turn to Size
-            resolution  = bitmap.HorizontalResolution.ToString() + "x" + bitmap.VerticalResolution.ToString();
-            Path        = _path;
-            Name        = System.IO.Path.GetFileNameWithoutExtension(_path);
-            bestMatch   = null;
-            Similar     = new ObservableCollection<Texture>();
+
+            Hash        = hash;
+            // Turn resol to Size
+            //var size = new Size(242, 424);
+            //Resolution  = bitmap.HorizontalResolution.ToString() + "x" + bitmap.VerticalResolution.ToString();
+            Path        = path;
+            Name        = System.IO.Path.GetFileNameWithoutExtension(path);
+            Match       = null;
+            Similar     = new ObservableCollection<ITexture>();
         }
 
-        private static BitmapImage BitmapToImageSource (Bitmap bitmap)
+        private static BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
             BitmapImage bitmapImage = null;
             using (var memory = new MemoryStream())
@@ -88,10 +90,10 @@ namespace MapComparer.Model
             return bitmapImage;
         }
 
-        public void SetMatch (Texture texture)
+        public void SetMatch(ITexture texture)
         {
-            if (texture == null)    return;
-            BestMatch = (BestMatch == texture) ? null : texture;
+            if (texture == null) return;
+            Match = (Match == texture) ? null : texture;
         }
     }
 }

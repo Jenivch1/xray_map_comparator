@@ -14,12 +14,21 @@ namespace MapComparer.Interface
     {
         public object Convert (object value, Type targetType, object parameter, CultureInfo culture)
         {
-            BitArray array = (BitArray)value;
             String str  = string.Empty;
-            foreach (var item in array)
+            
+            if (value is BitArray)
             {
-                str = item is true ? "1" : "0";
+                BitArray array = value as BitArray;
+                foreach (var item in array)
+                {
+                    str = item is true ? "1" : "0";
+                }
             }
+            else
+            {
+                MessageBox.Show("Converter parameter is not BitArray", "Error");
+            }
+            
             return str;
         }
 

@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapComparer.Interface" 
         xmlns:viewmodel="clr-namespace:MapComparer.Viewmodel"
-        mc:Ignorable="d" Title="ScanDialog" Height="300" Width="800" 
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        mc:Ignorable="d" Title="ScanDialog" Height="300" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         >
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <viewmodel:ScanSetupViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
+    
     <DockPanel>
         <Grid DockPanel.Dock="Bottom">
             <Button Content="Scan textures" HorizontalAlignment="Right" 

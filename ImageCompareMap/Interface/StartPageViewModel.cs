@@ -11,8 +11,8 @@ namespace MapComparer.Viewmodel
 {
     class StartPageViewModel : BindableObject
     {
-        private TextureManager model;
-        public TextureManager Model
+        private TextureScanner model;
+        public TextureScanner Model
         {
             get
             {
@@ -40,7 +40,7 @@ namespace MapComparer.Viewmodel
 
         public StartPageViewModel ()
         {
-            Model = TextureManager.Instance;
+            Model = TextureScanner.Instance;
             //textures = TextureManager.texturesOld;
         }
 

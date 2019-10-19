@@ -5,8 +5,8 @@ namespace MapComparer.Viewmodel
 {
     class ScanSetupViewModel : BindableObject
     {
-        private TextureManager model;
-        public TextureManager Model
+        private TextureScanner model;
+        public TextureScanner Model
         {
             get
             {
@@ -32,10 +32,10 @@ namespace MapComparer.Viewmodel
             set { threshold = value; OnPropertyChanged(); }
         }
 
-        public ScanSetupViewModel ()
+        public ScanSetupViewModel (TextureScanner scanner)
         {
-            Model           = TextureManager.Instance;
-
+            Model           = scanner;
+            
             Resolution      = Texture.previewSize;
             Threshold       = Hash.Threshold;
         }
@@ -47,12 +47,15 @@ namespace MapComparer.Viewmodel
                 return new Command(
                         (obj) => {
                             /// TODO: Remove all logic from VM.
+                            Hash.Threshold = Threshold;
+                            Texture.previewSize = Resolution;
+                            //PageManager.SetCurrentPage
+#if DEBUG
+                            Model.OldTexturesPath = @"C:\Users\User\Downloads\textures\textures_soc\crete";
+                            Model.NewTexturesPath = @"C:\Users\User\Downloads\textures\textures_cs\crete";
+#endif
 
-                            Hash.Threshold         = Threshold;
-                            Texture.previewSize    = Resolution;
-                            PageManager.SetFramePage(Pages.Main);
-
-                            Model.ProcessTextures();
+                            Model.ScanTextures();
                             // Close scan dialog here.
                         }
                     );
@@ -64,7 +67,7 @@ namespace MapComparer.Viewmodel
             get
             {
                 return new Command(
-                        (obj) => { Model.OldTexturesPath = Utils.PickFolder(); }
+                        (obj) => { Model.OldTexturesPath = DirectoryPicker.Pick(); }
                     );
             }
         }
@@ -74,7 +77,7 @@ namespace MapComparer.Viewmodel
             get
             {
                 return new Command(
-                        (obj) => { Model.NewTexturesPath = Utils.PickFolder(); }
+                        (obj) => { Model.NewTexturesPath = DirectoryPicker.Pick(); }
                     );
             }
         }

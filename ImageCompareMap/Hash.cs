@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace MapComparer.Model
 {
@@ -14,11 +15,17 @@ namespace MapComparer.Model
     /// Perceptive hash: https://habr.com/ru/post/120562/. 
     /// 5\64 is good similarity for this algorithm.
     /// </summary>
+    // TODO: SetPixel is slow - Rewrite with unsafe.
+    
     static class Hash
     {
         public static byte  Threshold   = 5;
 
-        // TODO: SetPixel is slow - Rewrite with unsafe.
+        //public static BitArray Create (BitmapImage image, int size)
+        //{
+        //    return new BitArray(size*size);
+        //}
+
         public static BitArray Create (Bitmap bitmap)
         {
             var size    = 8;
@@ -58,20 +65,15 @@ namespace MapComparer.Model
             // Промежуточные переменные ускоряют код в несколько раз.
             var width       = source.Width;
             var height      = source.Height;
-
             var sourceData  = source.LockBits(new Rectangle(new Point(0, 0), source.Size),
                              ImageLockMode.ReadOnly, source.PixelFormat);
-
             var result      = new Bitmap(width, height, source.PixelFormat);
             var resultData  = result.LockBits(new Rectangle(new Point(0, 0), result.Size), 
                                 ImageLockMode.ReadWrite, source.PixelFormat);
-
             var sourceStride = sourceData.Stride;
             var resultStride = resultData.Stride;
-
-            var sourceScan0 = sourceData.Scan0;
-            var resultScan0 = resultData.Scan0;
-
+            var sourceScan0  = sourceData.Scan0;
+            var resultScan0  = resultData.Scan0;
             var resultPixelSize = resultStride / width;
 
             unsafe
@@ -104,7 +106,7 @@ namespace MapComparer.Model
             byte differentBits = 0;
             for (int i = 0; i < hash1.Length; i++)
             {
-                if (hash1[i] != hash2[i])   { differentBits++; }
+                if (hash1[i] != hash2[i]) { differentBits++; }
             }
             return differentBits;
         }

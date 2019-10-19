@@ -7,18 +7,13 @@ using System.Windows.Forms;
 
 namespace MapComparer.Model
 {
-    class Utils
+    class DirectoryPicker
     {
-        public static string PickFolder ()
+        public static string Pick ()
         {
             var dialog = new FolderBrowserDialog();
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                return dialog.SelectedPath;
-            }
-
-            return "";
+            dialog.ShowDialog();
+            return dialog.SelectedPath;
         }
     }
 }

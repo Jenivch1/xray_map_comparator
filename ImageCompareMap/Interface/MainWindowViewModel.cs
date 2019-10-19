@@ -1,34 +1,26 @@
-﻿using MapComparer.Model;
+﻿using mapcompare.Utilites;
+using MapComparer.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace MapComparer.Viewmodel
 {
-
-    /// commands
-    /// 
-    /// next imame
-    /// prev image
-    /// next similar
-    /// prev similar
-    /// set match
-    /// add to matches
-
-
     class MainWindowViewModel : BindableObject
     {
-        private TextureManager model;
-        public TextureManager Model {
+        // turn to auto prop?
+        private TextureScanner model;
+        public TextureScanner Model {
             get
             {
                 return model;
             }
-            set
+            private set
             {
                 model = value;
                 OnPropertyChanged();
@@ -49,14 +41,20 @@ namespace MapComparer.Viewmodel
             }
         }
 
-        public ObservableCollection<Texture> OldTextures    { get; set; }
-        public ObservableCollection<Texture> NewTextures    { get; set; }
+        public ObservableCollection<ITexture> OldTextures    { get; set; }
+        public ObservableCollection<ITexture> NewTextures    { get; set; }
 
-        public MainWindowViewModel()
+#if DEBUG
+        public MainWindowViewModel ()
         {
-            Model = TextureManager.Instance;
-            //OldTextures = TextureManager.texturesOld;
-            //NewTextures = TextureManager.texturesNew;
+            //
+        }
+#endif
+        public MainWindowViewModel(TextureScanner scanner)
+        {
+            Model = scanner;
+            OldTextures = Model.TexturesOld;
+            NewTextures = Model.TexturesNew;
         }
 
         public ICommand ScanTextures
@@ -64,7 +62,10 @@ namespace MapComparer.Viewmodel
             get
             {
                 return new Command(
-                        (obj) => new Interface.ScanDialog().ShowDialog()
+                        (obj) => {
+                            var dialog = WindowFactory.CreateScanDialog();
+                            dialog.ShowDialog();
+                        }
                     );
             }
         }
@@ -75,7 +76,9 @@ namespace MapComparer.Viewmodel
             {
                 return new Command(
                         (obj) => {
-                            SelectedTexture.SetMatch(obj as Texture);
+                            var match = obj as Texture;
+                            if  (selectedTexture.Match == match)    { SelectedTexture.SetMatch(null); }
+                            else                                    { SelectedTexture.SetMatch(obj as Texture); }
                         },
                         (obj) => (obj != null && obj is Texture)
                     );
@@ -87,8 +90,8 @@ namespace MapComparer.Viewmodel
             get
             {
                 return new Command(
-                        (obj) => Model.RemoveTexture(obj as Texture),
-                        (obj) => obj != null
+                        (obj) => OldTextures.Remove(obj as Texture),
+                        (obj) => obj != null && obj is ITexture
                     );
             }
         }
@@ -98,8 +101,8 @@ namespace MapComparer.Viewmodel
             get
             {
                 return new Command(
-                        (obj) => Model.ExportTextureList()
-                        //,check
+                        (obj) => SimilarTexturesListExporter.Export(OldTextures),
+                        (obj) => OldTextures.Count > 0
                     );
             }
         }
@@ -113,9 +116,11 @@ namespace MapComparer.Viewmodel
                         (obj) =>
                         {
                             var listbox = obj as ListBox;
-                            listbox.SelectedIndex = (listbox.SelectedIndex == listbox.Items.Count - 1 || listbox.SelectedIndex == -1)
-                                ? 0
-                                : listbox.SelectedIndex + 1;
+                            listbox.SelectedIndex = 
+                                (listbox.SelectedIndex == listbox.Items.Count - 1 || listbox.SelectedIndex == -1)
+                                    ? 0
+                                    : listbox.SelectedIndex + 1;
+
                         }
                         //,
                         //(obj) => 
@@ -156,11 +161,14 @@ namespace MapComparer.Viewmodel
                 return new Command(
                         (obj) =>
                         {
-                            var listbox = obj as ListBox;
-                            listbox.SelectedIndex = (listbox.SelectedIndex == listbox.Items.Count - 1 || listbox.SelectedIndex == -1)
-                                ? 0
-                                : listbox.SelectedIndex + 1;
-                        }
+                            //var listbox = obj as ListBox;
+                            //listbox.SelectedIndex = (listbox.SelectedIndex == listbox.Items.Count - 1 || listbox.SelectedIndex == -1)
+                            //    ? 0
+                            //    : listbox.SelectedIndex + 1;
+
+                            IncrementSelectorSelectedItem(obj as Selector);
+                        },
+                        (obj) => obj is Selector
                     );
             }
         }
@@ -184,6 +192,25 @@ namespace MapComparer.Viewmodel
                             }
                         }
                     );
+            }
+        }
+
+        private void IncrementSelectorSelectedItem (Selector control)
+        {
+            //if
+            control.SelectedIndex = 
+                (control.SelectedIndex == control.Items.Count - 1 || control.SelectedIndex == -1)
+                                ? 0
+                                : control.SelectedIndex + 1;
+        }
+
+        private void DecrementSelectorSelectedItem(Selector control)
+        {
+            if (!control.Items.IsEmpty)
+            {
+                control.SelectedIndex = (control.SelectedIndex == 0 || control.SelectedIndex == -1)
+                    ? control.Items.Count - 1
+                    : control.SelectedIndex - 1;
             }
         }
     }
