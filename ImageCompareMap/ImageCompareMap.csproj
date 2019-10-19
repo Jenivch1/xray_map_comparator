@@ -78,36 +78,38 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Interface\View\MainWindow.xaml.cs">
+    <Compile Include="Interface\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interface\View\Dialogs\ScanDIalog.xaml.cs">
+    <Compile Include="Interface\ScanDIalog.xaml.cs">
       <DependentUpon>ScanDIalog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interface\View\Pages\ComparisonPage.xaml.cs">
+    <Compile Include="Interface\ComparisonPage.xaml.cs">
       <DependentUpon>ComparisonPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interface\View\Pages\StartPage.xaml.cs">
+    <Compile Include="Interface\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\HashToStringConverter.cs" />
-    <Compile Include="Interface\ViewModel\BindableObject.cs" />
-    <Compile Include="Interface\ViewModel\StartPageViewModel.cs" />
-    <Compile Include="Model\Hash.cs" />
-    <Compile Include="Interface\ViewModel\ScanSetupViewModel.cs" />
-    <Page Include="Interface\View\MainWindow.xaml">
+    <Compile Include="Interface\BindableObject.cs" />
+    <Compile Include="Interface\StartPageViewModel.cs" />
+    <Compile Include="Hash.cs" />
+    <Compile Include="Interface\ScanSetupViewModel.cs" />
+    <Compile Include="PageManager.cs" />
+    <Compile Include="WindowFactory.cs" />
+    <Page Include="Interface\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interface\View\Dialogs\ScanDIalog.xaml">
+    <Page Include="Interface\ScanDIalog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interface\View\Pages\ComparisonPage.xaml">
+    <Page Include="Interface\ComparisonPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interface\View\Pages\StartPage.xaml">
+    <Page Include="Interface\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -115,12 +117,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Logger.cs" />
-    <Compile Include="Model\PageManager.cs" />
-    <Compile Include="Model\Texture.cs" />
-    <Compile Include="Interface\ViewModel\Command.cs" />
-    <Compile Include="Interface\ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="Model\TextureManager.cs" />
+    <Compile Include="ITexture.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="PageFactory.cs" />
+    <Compile Include="Storage.cs" />
+    <Compile Include="Texture.cs" />
+    <Compile Include="Interface\Command.cs" />
+    <Compile Include="Interface\MainWindowViewModel.cs" />
+    <Compile Include="TextureFactory.cs" />
+    <Compile Include="TextureScanner.cs" />
     <Page Include="Styles\AppStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -139,7 +144,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Utils.cs" />
+    <Compile Include="Utilites\DirectoryPathValidator.cs" />
+    <Compile Include="Utilites\ImageLoader.cs" />
+    <Compile Include="Utilites\TexturePathValidator.cs" />
+    <Compile Include="Utilites\SimilarTexturesListExporter.cs" />
+    <Compile Include="Utilites\TextureValidator.cs" />
+    <Compile Include="Utilites\DirectoryPicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -174,9 +184,7 @@
   <ItemGroup>
     <Resource Include="Images\icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Infrastructure\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>

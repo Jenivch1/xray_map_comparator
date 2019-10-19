@@ -13,8 +13,8 @@
         <!--<Setter Property="Background" Value="LightGray"/>-->
     </Style>
 
-    <Style TargetType="Canvas" BasedOn="BasePanel">
-        <!--<Setter Property="Background" Value="LightGray"/>-->
-    </Style>
+    <!--<Style TargetType="Canvas" BasedOn="BasePanel">
+        <Setter Property="Background" Value="LightGray"/>
+    </Style>-->
 
 </ResourceDictionary>
