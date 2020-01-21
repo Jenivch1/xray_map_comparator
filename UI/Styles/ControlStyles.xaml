@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:UI.Styles">
+
+    <Style x:Name="BaseButtonStyle" TargetType="Button">
+        <Setter Property="MinWidth" Value="70"/>
+        <Setter Property="MinHeight" Value="20"/>
+    </Style>
+    
+</ResourceDictionary>

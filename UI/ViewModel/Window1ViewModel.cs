@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace MapComparer.viewmodel {
 
-    class Window1ViewModel : AbstractVM {
+    class Window1ViewModel : BindableObject {
 
         private ObservableCollection<Texture> textures;
 
