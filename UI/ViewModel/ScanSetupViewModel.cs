@@ -10,7 +10,7 @@ using System.Windows.Input;
 namespace MapComparer.viewmodel
 {
 
-    class ScanSetupViewModel : AbstractVM
+    class ScanSetupViewModel : BindableObject
     {
         private string  oldTexPath;
         public string OldTexPath

@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace MapComparer.viewmodel {
 
-    class MainWindowViewModel : AbstractVM {
+    class MainWindowViewModel : BindableObject {
 
         public ObservableCollection<Texture> Textures { get; set; }
 

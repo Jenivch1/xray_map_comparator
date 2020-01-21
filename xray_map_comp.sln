@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2002
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM_test", "ImageCompareMap\ImageCompareMap.csproj", "{F688B11F-0A2E-4682-AC93-15775CB831B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageCompareMap", "ImageCompareMap\ImageCompareMap.csproj", "{F688B11F-0A2E-4682-AC93-15775CB831B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{547F7A52-FD31-4CCB-BAAB-31984D045FD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F688B11F-0A2E-4682-AC93-15775CB831B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F688B11F-0A2E-4682-AC93-15775CB831B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F688B11F-0A2E-4682-AC93-15775CB831B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{547F7A52-FD31-4CCB-BAAB-31984D045FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{547F7A52-FD31-4CCB-BAAB-31984D045FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{547F7A52-FD31-4CCB-BAAB-31984D045FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{547F7A52-FD31-4CCB-BAAB-31984D045FD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

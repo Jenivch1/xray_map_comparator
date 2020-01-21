@@ -10,7 +10,12 @@ using System.Threading.Tasks;
 
 namespace MapComparer.Model
 {
-    /// Perceptive hash: https://habr.com/ru/post/120562/. 5\64 is good similarity for this algorithm.
+    /// <summary>
+    ///  Perceptive hash. 
+    ///  5\64 is good similarity for this algorithm.
+    ///  habr.com/ru/post/120562. 
+    /// </summary>
+
     static class Hash
     {
         public static byte  Threshold   = 5;
@@ -50,6 +55,22 @@ namespace MapComparer.Model
             return hash;
         }
 
+        public static byte CalcDifference (BitArray hash1, BitArray hash2)
+        {
+            byte differentBits = 0;
+            for (int i = 0; i < hash1.Length; i++)
+            {
+                if (hash1[i] != hash2[i])   { differentBits++; }
+            }
+            return differentBits;
+        }
+
+        public static bool IsSimilar (BitArray hash1, BitArray hash2)
+        {
+            byte differentBits = CalcDifference(hash1, hash2);
+            return  differentBits < Threshold;
+        }
+        
         private static Bitmap ToGrayscale (Bitmap source)
         {
             // Промежуточные переменные ускоряют код в несколько раз.
@@ -96,21 +117,6 @@ namespace MapComparer.Model
             return result;
         }
 
-        public static byte CalcDifference (BitArray hash1, BitArray hash2)
-        {
-            byte differentBits = 0;
-            for (int i = 0; i < hash1.Length; i++)
-            {
-                if (hash1[i] != hash2[i])   { differentBits++; }
-            }
-            return differentBits;
-        }
-
-        public static bool IsSimilar (BitArray hash1, BitArray hash2)
-        {
-            byte differentBits = CalcDifference(hash1, hash2);
-            return  differentBits < Threshold;
-        }
     }
 
 

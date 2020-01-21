@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace mapcompare.Model
 {
-    class Utils
+    static class FolderPicker
     {
-        private static string PickFolder ()
+        private static string Pick ()
         {
-            return 
-                (new System.Windows.Forms.FolderBrowserDialog())
-                .SelectedPath;
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            return dialog.SelectedPath;
         }
     }
 }
